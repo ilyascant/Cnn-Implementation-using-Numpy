@@ -36,11 +36,11 @@ class Settings:
             translated_image = cv2.warpAffine(rotated_image, translation_matrix, (cols, rows))
 
             # Add a little bit of noise
-            probability = random.uniform(0, 0.1)
+            probability = random.uniform(0, 0.3)
             noise_mask = np.random.random(translated_image.shape) <= probability
             noise_strength = np.random.random(translated_image.shape) - 0.5
             noise_value = translated_image * noise_strength
-            noisy_image = np.clip(translated_image + np.where(noise_mask, noise_value + noise_strength, translated_image), 0, 1)
+            noisy_image = np.clip(np.where(noise_mask, 1 * noise_strength, translated_image), 0, 1)
 
             if y_datas is not None:
                 new_x_datas[i] = noisy_image.reshape(1, -1)

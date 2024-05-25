@@ -47,7 +47,7 @@ if __name__ == "__main__":
     ###### CNN ######
     cnn = CNN(X_train, y_train, X_test, y_test)
 
-    model_filename = 'cnn_model_L0-16203036_R69619010.pkl'
+    model_filename = 'cnn_model_L0-05331331_R45610017.pkl'
     with open(model_filename, 'rb') as file:
         cnn = pickle.load(file)
         
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     t = tqdm(range(len(X_test)), leave=True)
     for i in t:
         x = X_test[i]
-        pred, prob = cnn.predict(x, 1, 2, 2)
+        pred, prob, all_probs = cnn.predict(x, 1, 2, 2)
         digit_count[int(y_test[i])]+=1
         if pred==y_test[i]:
             corr+=1

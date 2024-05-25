@@ -64,7 +64,7 @@ class CNN:
         self.bs3 = np.zeros(self.b3.shape)
         self.bs4 = np.zeros(self.b4.shape)
 
-        self.t = 0
+        self.time = 0
 
     def initializeFilter(self, size, scale = 1.0):
         stddev = scale/np.sqrt(np.prod(size))
@@ -168,7 +168,7 @@ class CNN:
         return df1, db1, df2, db2, dw3, db3, dw4, db4, cost 
 
     def adamGD(self, batch, costs, beta1, beta2, conv_stride = 1, pool_size = 2, pool_stride = 2):
-        self.time +=1
+        self.t +=1
 
         X = batch[:,0:-1] 
         X = X.reshape(len(batch), 1, 28, 28)
@@ -186,7 +186,7 @@ class CNN:
         db3 = np.zeros(self.b3.shape)
         db4 = np.zeros(self.b4.shape)
 
-        num_processes = num_processes or multiprocessing.cpu_count()
+        num_processes = multiprocessing.cpu_count()
         processes = []
         chunk_size = batch_size // num_processes
 
@@ -285,4 +285,4 @@ class CNN:
         
         probs = self.forward_prop(image, conv_s, pool_f, pool_s)
         
-        return np.argmax(probs), np.max(probs)
+        return np.argmax(probs), np.max(probs), probs
